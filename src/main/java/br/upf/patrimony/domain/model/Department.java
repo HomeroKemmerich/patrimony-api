@@ -1,13 +1,19 @@
 package br.upf.patrimony.domain.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * "@Entity" - Entidade Departamento
  * "@Table" - Define o nome da tabela atribuída à classe
+ * "@Data" - Get e Set automáticos
+ * "@NoArgsConstructor" - Gera um construtor vazio
  */
 @Entity
 @Table(name = "tb_department")
+@Data
+@NoArgsConstructor
 public class Department {
     /**
      * ID do departamento
