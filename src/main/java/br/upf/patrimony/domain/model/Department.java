@@ -22,7 +22,7 @@ public class Department {
      * Nome do departamento
      * "@Column" - configura as opções de coluna para o atributo
      */
-    @Column(name = "dep_name", length = 60)
+    @Column(name = "name", length = 60)
     private String name;
 
 
