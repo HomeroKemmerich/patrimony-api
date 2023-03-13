@@ -2,11 +2,13 @@ package br.upf.patrimony.api.controller;
 
 import br.upf.patrimony.domain.model.Department;
 import br.upf.patrimony.domain.repository.DepartmentRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.beans.Beans;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +64,33 @@ public class DepartmentController {
      * @param department
      */
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Department save(@RequestBody Department department){
         return repository.save(department);
+    }
+
+    /**
+     * PUT vs. PATCH - https://www.notion.so/homero-kemmerich/Patrimony-API-02722c527df0455d9dff81136e2095b0?pvs=4#0b59adc7b576405bb90aac7004c55670
+     * @param departmentId
+     * @param department
+     * @return
+     */
+    @PutMapping("/{departmentId}")
+    public ResponseEntity<?> update(@PathVariable Long departmentId, @RequestBody Department department){
+        Optional<Department> departmentOptional = repository.findById(departmentId);
+
+        /*
+        Verifica se o objeto foi encontrado
+        Se sim, atualiza o objeto,
+        Se não, retorna erro
+         */
+        if(departmentOptional.isPresent()){
+            Department currentDepartment = departmentOptional.get();
+
+            //Copia as propriedades de um objeto para o outro, ignorando o ID
+            BeanUtils.copyProperties(department, currentDepartment, "id");
+
+            return ResponseEntity.ok(repository.save(currentDepartment));
+        }
     }
 }

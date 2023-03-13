@@ -14,4 +14,3 @@ spring:
       path: /h2-console
   jpa:
     defer-datasource-initialization: true
-    
