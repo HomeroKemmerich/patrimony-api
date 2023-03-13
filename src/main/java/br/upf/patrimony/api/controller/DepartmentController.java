@@ -91,6 +91,15 @@ public class DepartmentController {
             BeanUtils.copyProperties(department, currentDepartment, "id");
 
             return ResponseEntity.ok(repository.save(currentDepartment));
+        } else {
+            return ResponseEntity.notFound().build();
         }
+    }
+
+    @DeleteMapping("/{departmentId}")
+    public ResponseEntity<?> delete(@PathVariable Long departmentId){
+        repository.deleteById(departmentId);
+
+        return ResponseEntity.noContent().build();
     }
 }
